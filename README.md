@@ -44,7 +44,9 @@ las teclas solo para este teclado. Necesita [Homebrew](https://brew.sh) e instal
 
 - **[Karabiner-Elements](https://karabiner-elements.pqrs.org/)**: añade una regla
   limitada a este teclado (por vendor/product id), así que el teclado del Mac y los
-  demás no cambian. Ctrl+C → Cmd+C, Ctrl+V → Cmd+V, ImprPant → Cmd+Shift+5.
+  demás no cambian. Convierte la tecla Ctrl en Cmd (Ctrl+C → Cmd+C, Ctrl+V → Cmd+V…)
+  e ImprPant en Cmd+Shift+5, así que cualquier combinación con Ctrl que grabes con
+  `remap.sh` también funciona en el Mac.
   La regla se activa sola en el perfil activo de `~/.config/karabiner/karabiner.json`
   y se deja también como regla predefinida (`karabiner/mini-teclado.json`).
 - **[MonitorControl](https://github.com/MonitorControl/MonitorControl)**: macOS no
@@ -79,6 +81,41 @@ Si prefieres no usar el script:
 `install.sh --mac` graba Cmd+C / Cmd+V / Cmd+Shift+5 directamente en el firmware.
 No hace falta Karabiner, pero entonces el teclado deja de copiar y pegar en Linux
 hasta que vuelvas a ejecutar `install.sh` allí.
+
+## Cambiar las acciones: `remap.sh`
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/jlcampana/mini-teclado/main/remap.sh | bash
+```
+
+Va preguntando control a control (botones 1–3, giro y pulsación de la perilla) con
+un menú de acciones habituales y la opción de escribir una propia; Enter mantiene la
+actual. Al final enseña el resultado y pide confirmación antes de grabarlo.
+
+| Botones                                                   | Giro de la perilla            |
+|-----------------------------------------------------------|-------------------------------|
+| Copiar, pegar, cortar, deshacer, rehacer, guardar          | Volumen                       |
+| Seleccionar todo, captura, play/pausa, pista sig./ant.     | Scroll                        |
+| Silencio, bloquear pantalla, cambiar de ventana (Alt+Tab)  | Pistas, flechas, zoom, pestañas |
+
+También funciona sin preguntas:
+
+```bash
+curl -fsSL …/remap.sh | bash -s -- --b1 ctrl-z --b2 ctrl-shift-z
+curl -fsSL …/remap.sh | bash -s -- --izq wheelup --der wheeldown --pulsar play
+curl -fsSL …/remap.sh | bash -s -- --mostrar   # configuración guardada
+curl -fsSL …/remap.sh | bash -s -- --reset     # vuelve a copiar/pegar/captura/volumen
+```
+
+Acciones posibles: combinaciones (`ctrl-shift-t`, `alt-tab`), teclas (`f13`, `enter`),
+multimedia (`play`, `next`, `mute`, `calculator`), ratón (`wheelup`, `click`) y
+secuencias separadas por comas (`"ctrl-a,ctrl-c"`). La lista completa está en la
+[documentación de ch57x-keyboard-tool](https://github.com/kriomant/ch57x-keyboard-tool/blob/master/doc/actions.md).
+Las acciones no válidas se rechazan antes de grabar.
+
+El teclado no permite leer lo que tiene grabado, así que la última configuración se
+guarda en `~/.config/mini-teclado/teclas.conf` (también la de `install.sh`). En el Mac
+usa Ctrl en las combinaciones: Karabiner las convierte en Cmd.
 
 ## Opciones de `install.sh`
 

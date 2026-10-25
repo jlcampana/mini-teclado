@@ -2,7 +2,9 @@
 # macOS: hace que el miniteclado CH57x (USB 1189:8890), programado con la
 # distribución PC (Ctrl+C | Ctrl+V | ImprPant), funcione como en un Mac:
 #
-#   Ctrl+C → Cmd+C   Ctrl+V → Cmd+V   ImprPant → Cmd+Shift+5
+#   Ctrl → Cmd (Ctrl+C → Cmd+C, Ctrl+V → Cmd+V…)   ImprPant → Cmd+Shift+5
+#
+# Al traducir la tecla Ctrl entera, lo que se ponga con remap.sh también funciona.
 #
 # Instala con Homebrew:
 #   - Karabiner-Elements, con una regla que solo afecta a este teclado; el

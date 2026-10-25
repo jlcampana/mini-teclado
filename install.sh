@@ -105,6 +105,12 @@ layers:
     fi
     ok "Teclado programado: [$copy] [$paste] [$shot] · perilla: volumen / silencio"
 
+    # Lo que se graba se guarda para que remap.sh parta de ello.
+    local conf="${XDG_CONFIG_HOME:-$HOME/.config}/mini-teclado/teclas.conf"
+    mkdir -p "$(dirname "$conf")"
+    printf 'b1=%s\nb2=%s\nb3=%s\nizq=volumedown\nder=volumeup\npulsar=mute\n' \
+        "$copy" "$paste" "$shot" > "$conf"
+
     if [ "$os" = "Darwin" ] && [ "$layout" = "pc" ] &&
        ! grep -qs '"Mini teclado:' "$HOME/.config/karabiner/karabiner.json"; then
         echo
